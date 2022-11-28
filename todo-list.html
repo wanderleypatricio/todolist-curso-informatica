@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>toDo list - lista de tarefas</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./css/todo-list.css"/>
+    <script>
+        var tarefas = [];
+
+        function adicionar(){
+            var tarefa = document.getElementById("tarefa").value;
+            tarefas.push({nome:tarefa, status:'pendente'});
+            listaTarefas();
+        }
+
+        function alterarStatus(item){
+            var conf = confirm("Deseja alterar o status dessa tarefa?");
+            if(conf){
+                var index = 0;
+
+                /*for(var i = 0; i < tarefas.length; i++){
+                    if(tarefas[i]['nome'] == item){
+                        tarefas[i]['status'] = "concluído";
+                        //tarefas.splice(i,1);
+                    }
+                }*/
+
+                /*tarefas.map(function(tarefa){
+                    if(tarefa.nome == item){
+                        tarefa.status = 'concluído';
+                    }
+                });*/
+
+                tarefas.map(tarefa => tarefa.nome == item ? 
+                        tarefa.status = 'concluído': ''
+                );
+
+                listaTarefas();
+            }
+        }
+
+        function listaTarefas(){
+            document.getElementById("conteudo").innerHTML = "";
+            tarefas.forEach(item => {
+                document.getElementById("conteudo").innerHTML += "<div id=\"itemList\" onclick=\"alterarStatus('"+item['nome']+"')\"><div id=\"nome-tarefa\">"+item['nome']+"</div><div id=\"status\">"+item['status']+"</div></div>";
+                
+            });
+            console.log(tarefas);
+        }
+    </script>
+</head>
+<body>
+    <div class="container bg-dark col-md-6 text-white">
+        <h2>toDo list - Controle de tarefas</h2>
+        <input class="col-md-10" type="text" name="tarefa" id="tarefa" placeholder="informe a tarefa"/>
+        <button id="add-tarefa" class="btn btn-primary " onclick="adicionar()">+</button>
+        <div id="conteudo">
+
+        </div>
+    </div>
+    <script src="./js/jquery-3.6.1.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+</body>
+</html>
